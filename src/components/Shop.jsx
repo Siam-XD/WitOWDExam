@@ -19,9 +19,23 @@ const products = [
 
 const Shop = () => {
     const [cart, setCart] = useState([])
+    const [discount, setDiscount] = useState(false)
+    const [coupon, setCoupon] = useState('')
+
     const handleBuy = product => {
         setCart([...cart, product])
     }
+    let totalPrice = 0;
+    for (let i = 0; i < cart.length; i++) {
+        totalPrice += cart[i].price;
+    }
+   const handleDiscount = (e) => {
+    e.preventDefault()
+    if(coupon === 'SELL200'){
+        setDiscount(true)
+    }
+    else alert('Invalid Coupon')
+   }
   return (
     <section className='py-20'>
         <Container>
@@ -35,16 +49,21 @@ const Shop = () => {
                 <div className='w-30% flex flex-col gap-6'>
                     <div className='rounded bg-gray-300 p-4'>
                         <h4 className='font-bold text-lg'>Have coupon?</h4>
-                        <input className=' bg-gray-700 rounded-l-lg px-3 py-1 mt-2 text-white' type="text" placeholder='Enter your coupon code' />
-                        <button className='bg-[#ff2e78] text-white rounded-r-md px-2 py-1 font-medium'>Apply</button>
+                        <form onSubmit={handleDiscount}>
+                            <input value={coupon} onChange={e => setCoupon(e.target.value)} className=' bg-gray-700 rounded-l-lg px-3 py-1 mt-2 text-white' type="text" placeholder='Enter your coupon code' />
+                            <button type='submit' className='bg-[#ff2e78] text-white rounded-r-md px-2 py-1 font-medium'>Apply</button>
+                        </form>
                     </div>
                     <div className='rounded bg-gray-300 p-4'>
-                        <ul>
+                        <ul className='ps-5'>
                             {cart.map((item) => (
-                                <li key={item.id}>{item.name}</li>
+                                <li className='font-semibold list-disc' key={item.id}>{item.name}</li>
                             ))}
                         </ul>
-                        <button className='bg-[#ff2e78] text-white rounded-md w-full py-1 font-semibold'>Make Purchase</button>
+                        <h5>Total Price: {totalPrice}</h5>
+                        <h5>Discount {discount? totalPrice * 0.2: 0}</h5>
+                        <h5>Total: {discount? totalPrice - totalPrice * 0.2:  totalPrice} </h5>
+                        <button onClick={handlePurchase} className='bg-[#ff2e78] text-white rounded-md w-full py-1 font-semibold'>Make Purchase</button>
                     </div>
                 </div>
             </div>
