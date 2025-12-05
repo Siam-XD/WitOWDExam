@@ -21,6 +21,7 @@ const Shop = () => {
     const [cart, setCart] = useState([])
     const [discount, setDiscount] = useState(false)
     const [coupon, setCoupon] = useState('')
+    const [purchased, setPurchased] = useState(false)
 
     const handleBuy = product => {
         setCart([...cart, product])
@@ -35,6 +36,10 @@ const Shop = () => {
         setDiscount(true)
     }
     else alert('Invalid Coupon')
+   }
+   const handlePurchase = () => {
+    setPurchased(true)
+    alert('Purchase Successful!')
    }
   return (
     <section className='py-20'>
