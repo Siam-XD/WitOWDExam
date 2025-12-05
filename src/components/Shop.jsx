@@ -7,6 +7,7 @@ import prod3 from '../assets/prod3.png'
 import prod4 from '../assets/prod4.png'
 import prod5 from '../assets/prod5.png'
 import prod6 from '../assets/prod6.png'
+import popup from '../assets/congo.png'
 
 const products = [
     { id: 1, name: 'Chamos Set', price: 500, src: prod1 },
@@ -38,8 +39,7 @@ const Shop = () => {
     else alert('Invalid Coupon')
    }
    const handlePurchase = () => {
-    setPurchased(true)
-    alert('Purchase Successful!')
+    cart.length===0? alert('Your cart is empty') : setPurchased(true)
    }
   return (
     <section className='py-20'>
@@ -68,11 +68,14 @@ const Shop = () => {
                         <h5>Total Price: {totalPrice}</h5>
                         <h5>Discount {discount? totalPrice * 0.2: 0}</h5>
                         <h5>Total: {discount? totalPrice - totalPrice * 0.2:  totalPrice} </h5>
-                        <button onClick={handlePurchase} className='bg-[#ff2e78] text-white rounded-md w-full py-1 font-semibold'>Make Purchase</button>
+                        <button onClick={() => cart.length===0? alert('Your cart is empty') : setPurchased(true)} className='bg-[#ff2e78] text-white rounded-md w-full py-1 font-semibold'>Make Purchase</button>
                     </div>
                 </div>
             </div>
         </Container>
+        {purchased && <div onClick={() => setPurchased(false)} className='fixed top-0 left-0 w-full h-full bg-[#000000be] flex items-center justify-center'>
+            <img src={popup} alt="congratulations" />
+        </div>}
     </section>
   )
 }
